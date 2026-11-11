@@ -1,0 +1,92 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <title>Dashboard Keep-Alive</title>
+  <style>
+    body {
+      font-family: system-ui, "Segoe UI", Arial, sans-serif;
+      margin: 0;
+      padding: 14px;
+      width: 300px;
+      color: #1f2937;
+    }
+    h1 {
+      font-size: 15px;
+      margin: 0 0 10px;
+    }
+    p {
+      margin: 6px 0;
+      font-size: 12px;
+    }
+    .status {
+      font-weight: 600;
+    }
+    .ok {
+      color: #047857;
+    }
+    .warn {
+      color: #b45309;
+    }
+    .error {
+      color: #b91c1c;
+    }
+    label {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      font-size: 12px;
+      margin: 8px 0;
+    }
+    input {
+      width: 64px;
+      padding: 4px;
+    }
+    .buttons {
+      display: flex;
+      gap: 8px;
+      margin-top: 12px;
+    }
+    button {
+      flex: 1;
+      padding: 7px 8px;
+      font-size: 12px;
+      cursor: pointer;
+      border: 1px solid #cbd5e1;
+      background: #f8fafc;
+      border-radius: 4px;
+    }
+    button.primary {
+      background: #0f766e;
+      border-color: #0f766e;
+      color: white;
+    }
+    button:disabled {
+      opacity: 0.5;
+      cursor: default;
+    }
+    .url {
+      word-break: break-all;
+      color: #475569;
+    }
+    .next {
+      color: #475569;
+    }
+  </style>
+</head>
+<body>
+  <h1>Dashboard Keep-Alive</h1>
+  <p>Status: <span id="status" class="status">Loading...</span></p>
+  <p class="url" id="tab"></p>
+  <label>Min minutes <input id="min" type="number" min="1" max="60" value="4"></label>
+  <label>Max minutes <input id="max" type="number" min="1" max="60" value="9"></label>
+  <div class="buttons">
+    <button id="start" class="primary">Start on this tab</button>
+    <button id="stop">Stop</button>
+  </div>
+  <p class="next" id="next"></p>
+  <p class="url" id="message"></p>
+  <script src="popup.js"></script>
+</body>
+</html>

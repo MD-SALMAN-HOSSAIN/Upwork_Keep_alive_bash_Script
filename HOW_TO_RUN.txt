@@ -1,0 +1,262 @@
+HOW TO RUN THE UPWORK SESSION KEEP-ALIVE
+========================================
+
+TWO WAYS TO RUN IT
+------------------
+A. Use your existing logged-in Chrome (no second window).
+   Load the extension once. See "OPTION A" below.
+
+B. Double-click START_HERE.bat.
+   Starts a separate Chrome window with remote debugging.
+   Log in once in that window. See "OPTION B" below.
+
+Important: Chrome 136+ blocks remote-debugging connections to the default
+Chrome profile. A script cannot attach to an already-open normal Chrome.
+The extension works inside your existing Chrome. The .bat uses a separate
+debug profile where you log in once.
+
+
+OPTION A: USE YOUR EXISTING CHROME (EXTENSION)
+----------------------------------------------
+This is the best option if you are already logged in to Upwork in your normal
+Chrome and do not want to log in again.
+
+One-time setup:
+  1. Open Chrome and go to: chrome://extensions
+  2. Turn on "Developer mode" in the top-right corner.
+  3. Click "Load unpacked".
+  4. Select this folder:
+     D:\New_Automations_for_Upwork\chrome-extension
+  5. Click the puzzle-piece icon in Chrome's toolbar and pin
+     "Dashboard Keep-Alive".
+
+To use it:
+  After loading it, the extension automatically:
+    1. Uses an existing Upwork tab, or opens a new Upwork tab in your
+       current Chrome window.
+    2. Starts refreshing that tab every 4 to 9 minutes.
+    3. Waits if it sees a login page and checks again every minute.
+
+  If it does not start automatically:
+    1. Open your Upwork dashboard tab and make sure you are logged in.
+    2. Click the "Dashboard Keep-Alive" icon.
+    3. Keep min = 4 and max = 9, or choose your own values.
+    4. Click "Start on this tab".
+
+  Leave the tab open. It reloads every 4 to 9 minutes.
+
+To stop:
+  Click the extension icon and press "Stop".
+  Or disable/remove the extension from chrome://extensions.
+
+Notes:
+  - It works in your normal Chrome profile. No debug port is needed.
+  - Load it in the same Chrome profile where you are logged in to Upwork.
+  - If you already loaded an older copy, click the circular Reload icon on
+    its card in chrome://extensions to pick up the latest version.
+  - If it sees a login page, it waits and checks again every minute.
+  - If you close the dashboard tab, it opens a new one automatically.
+  - Chrome may delay an alarm if the computer is asleep. It resumes later.
+  - The extension only tracks Upwork tabs.
+
+
+OPTION B: DOUBLE-CLICK START_HERE.bat
+-------------------------------------
+Double-click: START_HERE.bat
+
+That is all. Do NOT double-click keepalive.js or run.ps1.
+
+START_HERE.bat automatically:
+  1. Starts Chrome with remote debugging.
+  2. Opens the Upwork dashboard.
+  3. Starts the keep-alive in a new window.
+  4. Waits for you to log in if needed.
+  5. Refreshes the dashboard every 4 to 9 minutes.
+
+First run only: log in to Upwork in the Chrome window that opens.
+Keep the "Upwork Keep-Alive" window open.
+To stop: close the keep-alive window or press Ctrl+C in it.
+
+Double-click START_HERE.bat only once. If you want it on your desktop,
+right-click START_HERE.bat, choose "Send to", then "Desktop (create shortcut)".
+
+Other files, for reference:
+  start-chrome.ps1  Starts Chrome with remote debugging
+  run.ps1           Manual keep-alive launcher
+  keepalive.js      Actual script; no need to open or edit it
+  run.sh            macOS / Linux / Git Bash launcher
+  chrome-extension  Extension for your normal Chrome profile
+
+Everything is already installed in this folder.
+
+
+IF DOUBLE-CLICK DOES NOT WORK: MANUAL METHOD
+--------------------------------------------
+Step 1. Open PowerShell.
+        Press the Windows key, type "PowerShell", and press Enter.
+
+Step 2. Go to the project folder:
+
+        cd D:\New_Automations_for_Upwork
+
+Step 3. Start Chrome with remote debugging enabled. Run:
+
+        .\start-chrome.ps1
+
+        If PowerShell blocks it, run:
+
+        powershell -NoProfile -ExecutionPolicy Bypass -File .\start-chrome.ps1
+
+        A new Chrome window opens. This is a separate Chrome profile used
+        only for automation. Chrome 136+ requires --user-data-dir.
+
+Step 4. In that new Chrome window, open Upwork and log in normally:
+
+        https://www.upwork.com/nx/find-work/
+
+        Log in once. The session and cookies are saved in that profile.
+        The script never reads or stores your password.
+
+Step 5. Go back to PowerShell and start the keep-alive:
+
+        .\run.ps1
+
+        If PowerShell blocks the script with an execution-policy error, run:
+
+        powershell -NoProfile -ExecutionPolicy Bypass -File .\run.ps1
+
+Step 6. Leave the PowerShell window open.
+        The script refreshes the dashboard every 4 to 9 minutes (randomized).
+
+Step 7. To stop, click the PowerShell window and press Ctrl+C.
+        The script disconnects from Chrome, but Chrome stays open.
+        Close the Chrome window separately if you want to stop everything.
+
+
+OPTIONAL SETTINGS
+-----------------
+You can change the page and interval before running. In PowerShell:
+
+        $env:DASHBOARD_URL = "https://www.upwork.com/nx/find-work/"
+        $env:MIN_MINUTES = "4"
+        $env:MAX_MINUTES = "9"
+        .\run.ps1
+
+Available settings:
+  DASHBOARD_URL          Page to keep refreshed
+  CDP_URL                Chrome debugging address (default http://127.0.0.1:9222)
+  MIN_MINUTES            Minimum minutes between refreshes (default 4)
+  MAX_MINUTES            Maximum minutes between refreshes (default 9)
+  RELOAD_TIMEOUT_MS      Page load timeout (default 60000)
+  RECONNECT_DELAY_MS     Wait before reconnecting (default 15000)
+  MAX_RECONNECT_ATTEMPTS 0 = retry forever (default 0)
+  LOGIN_WAIT_MINUTES     Minutes to wait for manual login (default 10)
+  FOCUS_TAB              true = bring the tab to the front on refresh
+
+
+MACOS / LINUX / GIT BASH
+------------------------
+Step 1. Start Chrome with remote debugging:
+
+        macOS:
+          "/Applications/Google Chrome.app/Contents/MacOS/Google Chrome" \
+            --remote-debugging-port=9222 \
+            --user-data-dir="$HOME/.chrome-debug-profile"
+
+        Linux:
+          google-chrome \
+            --remote-debugging-port=9222 \
+            --user-data-dir="$HOME/.chrome-debug-profile"
+
+Step 2. Log in to the dashboard in that Chrome window.
+
+Step 3. Run:
+
+        cd /path/to/New_Automations_for_Upwork
+        chmod +x run.sh
+        ./run.sh
+
+Step 4. Press Ctrl+C to stop.
+
+
+CHECKING THAT CHROME IS READY
+-----------------------------
+Run this in PowerShell:
+
+        curl http://127.0.0.1:9222/json/version
+
+If it prints JSON, Chrome is ready. If it fails, Chrome was not started with
+--remote-debugging-port=9222, or the Chrome window was closed.
+
+
+COMMON PROBLEMS
+---------------
+"The extension icon is missing"
+  Click the puzzle-piece icon in Chrome's toolbar and pin "Dashboard Keep-Alive".
+  If it is not listed, load it again from chrome://extensions with Developer
+  mode turned on.
+
+"The Start button is disabled"
+  The active tab is not an Upwork page. Open your Upwork dashboard tab and
+  click the extension icon again.
+
+"The extension says Waiting for login"
+  Log in in that tab. The extension checks again every minute, then refreshes
+  every 4 to 9 minutes.
+
+"I want to use my normal Chrome, not a second window"
+  Use OPTION A, the extension. Chrome 136+ does not allow the script to attach
+  to the default Chrome profile.
+
+"START_HERE.bat opens and closes immediately"
+  Read the message in the window. If Node.js is missing, install it from
+  https://nodejs.org/. If it says Chrome is not reachable, close every Chrome
+  window that uses the debug profile and double-click START_HERE.bat again.
+
+"Windows protected your PC" when double-clicking
+  Click "More info", then "Run anyway". This is Windows SmartScreen warning
+  about a downloaded .bat file.
+
+"Chrome is not reachable on the remote-debugging port"
+  For manual runs, run .\start-chrome.ps1 first. For double-click, make sure
+  no other program is using port 9222. Do not use your normal Chrome shortcut;
+  it does not enable remote debugging.
+
+"Chrome did not open the debugging port 9222"
+  A Chrome window is already using the debug profile. Close that window, then
+  double-click START_HERE.bat again.
+
+"--remote-debugging-port is not recognized" or "Missing expression"
+  That line is only a flag, not a complete command. Use START_HERE.bat, or
+  run .\start-chrome.ps1 in PowerShell.
+
+"Running scripts is disabled on this system"
+  Use: powershell -NoProfile -ExecutionPolicy Bypass -File .\run.ps1
+
+The script shows a login page after refreshing
+  The script waits for login. Log in in the debug Chrome window; it will
+  continue automatically.
+
+Chrome 136 or newer ignores the debugging port
+  You must pass --user-data-dir with a non-default profile, as shown above.
+
+I closed the dashboard tab
+  The extension reopens it automatically while it is running. To stop it,
+  press "Stop" in the extension popup.
+
+"ECONNREFUSED" or "fetch failed"
+  Chrome is not running with remote debugging, or CDP_URL is wrong.
+
+
+SECURITY AND DISCLAIMER
+-----------------------
+Keep port 9222 bound to 127.0.0.1. Never expose it to the internet; anyone
+with access to that port can control the browser.
+
+Automating a website may violate its Terms of Service. Upwork and similar
+platforms restrict bots, automated activity, and artificial activity signals.
+Randomized timing does not make automation compliant and does not guarantee
+that it will go unnoticed. You are responsible for complying with the
+platform's ToS, rate limits, and applicable laws. Keep intervals conservative,
+run only one instance per account, and stop if the platform objects. The
+authors accept no liability for account restrictions or other consequences.

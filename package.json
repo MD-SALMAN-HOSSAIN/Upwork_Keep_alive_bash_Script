@@ -1,0 +1,16 @@
+{
+  "name": "dashboard-session-keepalive",
+  "version": "1.0.0",
+  "private": true,
+  "description": "Keep an existing Chrome dashboard session refreshed over CDP with randomized intervals.",
+  "main": "keepalive.js",
+  "scripts": {
+    "start": "node keepalive.js"
+  },
+  "engines": {
+    "node": ">=18"
+  },
+  "dependencies": {
+    "puppeteer-core": "^24.0.0"
+  }
+}
