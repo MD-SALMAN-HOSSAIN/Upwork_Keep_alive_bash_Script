@@ -7,8 +7,8 @@ Set-Location -LiteralPath $PSScriptRoot
 
 if (-not $env:DASHBOARD_URL) { $env:DASHBOARD_URL = 'https://www.upwork.com/nx/find-work/' }
 if (-not $env:CDP_URL) { $env:CDP_URL = 'http://127.0.0.1:9222' }
-if (-not $env:MIN_MINUTES) { $env:MIN_MINUTES = '4' }
-if (-not $env:MAX_MINUTES) { $env:MAX_MINUTES = '9' }
+if (-not $env:MIN_MINUTES) { $env:MIN_MINUTES = '2' }
+if (-not $env:MAX_MINUTES) { $env:MAX_MINUTES = '5' }
 
 if (-not (Get-Command node -ErrorAction SilentlyContinue)) {
   Write-Error 'Node.js 18+ is required: https://nodejs.org/'

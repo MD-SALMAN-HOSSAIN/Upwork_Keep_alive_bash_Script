@@ -11,8 +11,8 @@ cd "$SCRIPT_DIR"
 
 export DASHBOARD_URL="${DASHBOARD_URL:-https://www.upwork.com/nx/find-work/}"
 export CDP_URL="${CDP_URL:-http://127.0.0.1:9222}"
-export MIN_MINUTES="${MIN_MINUTES:-4}"
-export MAX_MINUTES="${MAX_MINUTES:-9}"
+export MIN_MINUTES="${MIN_MINUTES:-2}"
+export MAX_MINUTES="${MAX_MINUTES:-5}"
 
 info() {
   printf '[run.sh] %s\n' "$*" >&2

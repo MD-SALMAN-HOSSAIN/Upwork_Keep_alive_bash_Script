@@ -34,16 +34,16 @@ To use it:
   After loading it, the extension automatically:
     1. Uses an existing Upwork tab, or opens a new Upwork tab in your
        current Chrome window.
-    2. Starts refreshing that tab every 4 to 9 minutes.
+    2. Starts refreshing that tab every 2 to 5 minutes.
     3. Waits if it sees a login page and checks again every minute.
 
   If it does not start automatically:
     1. Open your Upwork dashboard tab and make sure you are logged in.
     2. Click the "Dashboard Keep-Alive" icon.
-    3. Keep min = 4 and max = 9, or choose your own values.
+    3. Keep min = 2 and max = 5, or choose your own values.
     4. Click "Start on this tab".
 
-  Leave the tab open. It reloads every 4 to 9 minutes.
+  Leave the tab open. It reloads every 2 to 5 minutes.
 
 To stop:
   Click the extension icon and press "Stop".
@@ -71,7 +71,7 @@ START_HERE.bat automatically:
   2. Opens the Upwork dashboard.
   3. Starts the keep-alive in a new window.
   4. Waits for you to log in if needed.
-  5. Refreshes the dashboard every 4 to 9 minutes.
+  5. Refreshes the dashboard every 2 to 5 minutes.
 
 First run only: log in to Upwork in the Chrome window that opens.
 Keep the "Upwork Keep-Alive" window open.
@@ -126,7 +126,7 @@ Step 5. Go back to PowerShell and start the keep-alive:
         powershell -NoProfile -ExecutionPolicy Bypass -File .\run.ps1
 
 Step 6. Leave the PowerShell window open.
-        The script refreshes the dashboard every 4 to 9 minutes (randomized).
+        The script refreshes the dashboard every 2 to 5 minutes (randomized).
 
 Step 7. To stop, click the PowerShell window and press Ctrl+C.
         The script disconnects from Chrome, but Chrome stays open.
@@ -138,15 +138,15 @@ OPTIONAL SETTINGS
 You can change the page and interval before running. In PowerShell:
 
         $env:DASHBOARD_URL = "https://www.upwork.com/nx/find-work/"
-        $env:MIN_MINUTES = "4"
-        $env:MAX_MINUTES = "9"
+        $env:MIN_MINUTES = "2"
+        $env:MAX_MINUTES = "5"
         .\run.ps1
 
 Available settings:
   DASHBOARD_URL          Page to keep refreshed
   CDP_URL                Chrome debugging address (default http://127.0.0.1:9222)
-  MIN_MINUTES            Minimum minutes between refreshes (default 4)
-  MAX_MINUTES            Maximum minutes between refreshes (default 9)
+  MIN_MINUTES            Minimum minutes between refreshes (default 2)
+  MAX_MINUTES            Maximum minutes between refreshes (default 5)
   RELOAD_TIMEOUT_MS      Page load timeout (default 60000)
   RECONNECT_DELAY_MS     Wait before reconnecting (default 15000)
   MAX_RECONNECT_ATTEMPTS 0 = retry forever (default 0)
@@ -202,7 +202,7 @@ COMMON PROBLEMS
 
 "The extension says Waiting for login"
   Log in in that tab. The extension checks again every minute, then refreshes
-  every 4 to 9 minutes.
+  every 2 to 5 minutes.
 
 "I want to use my normal Chrome, not a second window"
   Use OPTION A, the extension. Chrome 136+ does not allow the script to attach

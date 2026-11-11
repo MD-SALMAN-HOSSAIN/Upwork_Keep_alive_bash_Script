@@ -36,8 +36,8 @@ try {
   CONFIG = {
     dashboardUrl: process.env.DASHBOARD_URL || 'https://www.upwork.com/nx/find-work/',
     cdpUrl: process.env.CDP_URL || 'http://127.0.0.1:9222',
-    minMinutes: readNumber('MIN_MINUTES', 4),
-    maxMinutes: readNumber('MAX_MINUTES', 9),
+    minMinutes: readNumber('MIN_MINUTES', 2),
+    maxMinutes: readNumber('MAX_MINUTES', 5),
     reloadTimeoutMs: readNumber('RELOAD_TIMEOUT_MS', 60_000),
     reconnectDelayMs: readNumber('RECONNECT_DELAY_MS', 15_000),
     maxReconnectAttempts: readNumber('MAX_RECONNECT_ATTEMPTS', 0),

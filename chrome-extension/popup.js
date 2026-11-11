@@ -35,8 +35,8 @@ async function refresh() {
   $('status').className = state.active ? 'status ok' : 'status';
 
   $('tab').textContent = currentTab ? currentTab.url || '' : 'No active tab';
-  $('min').value = state.minMinutes ?? 4;
-  $('max').value = state.maxMinutes ?? 9;
+  $('min').value = state.minMinutes ?? 2;
+  $('max').value = state.maxMinutes ?? 5;
   $('next').textContent =
     state.active && state.nextReload ? `Next refresh in ${formatTime(state.nextReload)}` : '';
 

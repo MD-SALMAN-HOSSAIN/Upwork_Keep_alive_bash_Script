@@ -2,7 +2,7 @@
   "manifest_version": 3,
   "name": "Dashboard Keep-Alive",
   "version": "1.0.0",
-  "description": "Reloads an Upwork dashboard tab at randomized 4-9 minute intervals.",
+  "description": "Reloads an Upwork dashboard tab at randomized 2-5 minute intervals.",
   "permissions": ["alarms", "storage", "tabs"],
   "host_permissions": ["https://www.upwork.com/*", "https://*.upwork.com/*"],
   "action": {

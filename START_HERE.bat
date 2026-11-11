@@ -24,7 +24,7 @@ if errorlevel 1 goto chrome_failed
 echo.
 echo Opening the keep-alive window...
 echo If this is your first run, log in to Upwork in the Chrome window.
-echo The keep-alive waits for login, then refreshes every 4 to 9 minutes.
+echo The keep-alive waits for login, then refreshes every 2 to 5 minutes.
 echo.
 
 start "Upwork Keep-Alive" /D "%~dp0" cmd /k "node keepalive.js"

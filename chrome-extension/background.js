@@ -6,8 +6,8 @@ const DASHBOARD_URL = 'https://www.upwork.com/nx/find-work/';
 const DEFAULT_STATE = {
   active: false,
   tabId: null,
-  minMinutes: 4,
-  maxMinutes: 9,
+  minMinutes: 2,
+  maxMinutes: 5,
   lastReload: null,
   nextReload: null,
   status: 'Stopped',
@@ -24,8 +24,8 @@ async function setState(patch) {
 }
 
 function randomMinutes(minMinutes, maxMinutes) {
-  const min = Math.max(1, Number(minMinutes) || 4);
-  const max = Math.max(min, Number(maxMinutes) || 9);
+  const min = Math.max(1, Number(minMinutes) || 2);
+  const max = Math.max(min, Number(maxMinutes) || 5);
   const sample = (Math.random() + Math.random()) / 2;
   return min + sample * (max - min);
 }
@@ -168,8 +168,8 @@ chrome.runtime.onMessage.addListener((message, sender, sendResponse) => {
 
   if (message.type === 'start') {
     (async () => {
-      const min = Math.max(1, Math.min(60, Number(message.minMinutes) || 4));
-      const max = Math.max(min, Math.min(60, Number(message.maxMinutes) || 9));
+      const min = Math.max(1, Math.min(60, Number(message.minMinutes) || 2));
+      const max = Math.max(min, Math.min(60, Number(message.maxMinutes) || 5));
       await startOnTab(message.tabId, min, max);
       sendResponse({ ok: true });
     })().catch((error) => {
@@ -202,9 +202,11 @@ chrome.runtime.onStartup.addListener(async () => {
 });
 
 chrome.runtime.onInstalled.addListener(async () => {
-  const existing = await chrome.storage.local.get('active');
+  const existing = await chrome.storage.local.get(['active', 'minMinutes', 'maxMinutes']);
   if (existing.active === undefined) {
     await chrome.storage.local.set(DEFAULT_STATE);
+  } else if (existing.minMinutes === 4 && existing.maxMinutes === 9) {
+    await chrome.storage.local.set({ minMinutes: 2, maxMinutes: 5 });
   }
   await autoStart();
 });

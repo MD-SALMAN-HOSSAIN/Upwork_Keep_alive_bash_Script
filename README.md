@@ -1,6 +1,6 @@
 # Dashboard Session Keep-Alive
 
-Keeps an Upwork dashboard refreshed at randomized 4–9 minute intervals. There are two options:
+Keeps an Upwork dashboard refreshed at randomized 2–5 minute intervals. There are two options:
 
 - **Extension:** runs inside your existing, already-logged-in Chrome profile. Best if you do not want a second browser window.
 - **Node/Puppeteer script:** attaches over CDP to a separate Chrome started with remote debugging. Best for a scriptable, cross-platform setup.
@@ -26,7 +26,7 @@ Chrome 136+ ignores remote debugging on the default Chrome profile, so `keepaliv
 3. Pin **Dashboard Keep-Alive**.
 4. The extension opens or reuses an Upwork tab in your current Chrome window and starts automatically.
 
-If it does not start automatically, open your Upwork dashboard, click the extension, set 4–9 minutes, and click **Start on this tab**. If you already loaded an older copy, click the circular Reload icon on its card in `chrome://extensions` so the auto-open code takes effect.
+If it does not start automatically, open your Upwork dashboard, click the extension, set 2–5 minutes, and click **Start on this tab**. If you already loaded an older copy, click the circular Reload icon on its card in `chrome://extensions` so the auto-open code takes effect.
 
 The extension runs inside your existing profile, uses `chrome.alarms` for randomized reloads, waits if it detects a login page, and reopens the dashboard tab if you close it. It does not use the debug port or a second browser window. Click **Stop** in the popup to stop it.
 
@@ -114,8 +114,8 @@ All settings are environment variables:
 | --- | --- | --- |
 | `DASHBOARD_URL` | `https://www.upwork.com/nx/find-work/` | Page to keep refreshed |
 | `CDP_URL` | `http://127.0.0.1:9222` | Chrome remote-debugging endpoint |
-| `MIN_MINUTES` | `4` | Minimum interval between refreshes |
-| `MAX_MINUTES` | `9` | Maximum interval between refreshes |
+| `MIN_MINUTES` | `2` | Minimum interval between refreshes |
+| `MAX_MINUTES` | `5` | Maximum interval between refreshes |
 | `RELOAD_TIMEOUT_MS` | `60000` | Timeout for navigation/reload |
 | `RECONNECT_DELAY_MS` | `15000` | Wait before reconnecting to Chrome |
 | `MAX_RECONNECT_ATTEMPTS` | `0` | `0` = retry forever |
@@ -126,8 +126,8 @@ Example:
 
 ```bash
 DASHBOARD_URL="https://www.upwork.com/nx/find-work/" \
-MIN_MINUTES=4 \
-MAX_MINUTES=9 \
+MIN_MINUTES=2 \
+MAX_MINUTES=5 \
 ./run.sh
 ```
 
